@@ -16,7 +16,9 @@
     }
     @keyframes fadeInUp { 0% {opacity:0; transform:translateY(30px);} 100% {opacity:1; transform:translateY(0);} }
     .fade-in { opacity:0; animation:fadeInUp .8s ease forwards; }
-    .fade-delay-1 { animation-delay:.2s; } .fade-delay-2 { animation-delay:.4s; } .fade-delay-3 { animation-delay:.6s; }
+    .fade-delay-1 { animation-delay:.2s; } 
+    .fade-delay-2 { animation-delay:.4s; } 
+    .fade-delay-3 { animation-delay:.6s; }
     .fixed-logo { position:fixed; top:15px; left:15px; width:55px; height:55px; border-radius:50%; object-fit:cover; border:3px solid #fff; box-shadow:0 4px 10px rgba(0,0,0,.2); z-index:1000; background:#fff;}
     .banner { background:url("https://img1.pixhost.to/images/8542/638575426_yonzdev.jpg") center/cover no-repeat; padding:80px 20px; text-align:center; color:#fff; position:relative;}
     .banner::after{content:""; position:absolute; inset:0; background:rgba(0,0,0,.55);}
@@ -118,10 +120,10 @@
   <div class="info-card fade-in fade-delay-3" id="contact">
     <h2>Contact Kami</h2>
     <div class="contact" style="flex-direction: column; gap: 15px;">
-      <a href="https://wa.me/6282221744770" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-      <a href="https://t.me/XdeppDev" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
       <a href="depstoreku@gmail.com"><i class="fas fa-envelope"></i> Email</a>
+      <a href="https://t.me/XdeppDev" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
     </div>
+  </div>
    
   <!-- BAGIAN KOMENTAR -->
   <div class="info-card fade-in fade-delay-3">
@@ -179,51 +181,6 @@
         form.reset();
       } catch (err) {
         statusEl.textContent = "Gagal mengirim, coba lagi.";
-      }
-    });
-
-    // FORM CONTACT
-    const contactForm = document.getElementById("contactForm");
-    const contactStatus = document.getElementById("contactStatus");
-
-    contactForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const name = document.getElementById("contactName").value;
-      const email = document.getElementById("contactEmail").value;
-      const message = document.getElementById("contactMessage").value;
-
-      contactStatus.textContent = "Mengirim...";
-
-      const contactId = Math.floor(10000 + Math.random() * 90000);
-      const waktu = new Date().toLocaleString("id-ID", { timeZone: "Asia/Jakarta" });
-
-      const text = `
-\`\`\`
-💌 PESAN BARU MASUK!
-━━━━━━━━━━━━━━━
-🆔 ID       : #${contactId}
-👤 Nama     : ${name}
-📧 Email    : ${email}
-📝 Pesan    : ${message}
-⏰ Waktu    : ${waktu}
-━━━━━━━━━━━━━━━
-\`\`\`
-`;
-
-      try {
-        await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            chat_id: CHAT_ID,
-            text: text,
-            parse_mode: "MarkdownV2"
-          }),
-        });
-        contactStatus.textContent = "Pesan berhasil dikirim ke admin!";
-        contactForm.reset();
-      } catch (err) {
-        contactStatus.textContent = "Gagal mengirim, coba lagi.";
       }
     });
 
