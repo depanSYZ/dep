@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>depStoreku</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
   <style>
     body {
       font-family: "Segoe UI", Arial, sans-serif;
@@ -100,21 +99,31 @@
   </div>
   
   <div class="info-card fade-in fade-delay-2">
-  <div class="section">
-    <h2>Jasa depstore</h2>
-    <ul>
-      <li><span>Jasa Rename SC Bot WA</span><span>10k</span></li>
-      <li><span>Jasa Buat Web payment</span><span>15k</span></li>
-      <li><span>Jasa Buat Web Store</span><span>20k</span></li>
-      <li><span>Jasa Run SC</span><span>5k</span></li>
-      <li><span>Jasa Suntik Followers tiktok/ig</span><span>5k-50k</span></li>
-      <li><span>Jasa Suntik Like Tiktok/ig</span><span>5k-50k</span></li>
-      <li><span>Jasa Makan Nasgor goreng</span><span>50jt</span></li>
-    </ul>
-    <p class="note">⚡ Semua jasa dikerjakan cepat & bergaransi. Request custom bisa chat admin langsung.</p>
+    <div class="section">
+      <h2>Jasa depstore</h2>
+      <ul>
+        <li><span>Jasa Rename SC Bot WA</span><span>10k</span></li>
+        <li><span>Jasa Buat Web payment</span><span>15k</span></li>
+        <li><span>Jasa Buat Web Store</span><span>20k</span></li>
+        <li><span>Jasa Run SC</span><span>5k</span></li>
+        <li><span>Jasa Suntik Followers tiktok/ig</span><span>5k-50k</span></li>
+        <li><span>Jasa Suntik Like Tiktok/ig</span><span>5k-50k</span></li>
+        <li><span>Jasa Makan Nasgor goreng</span><span>50jt</span></li>
+      </ul>
+      <p class="note">⚡ Semua jasa dikerjakan cepat & bergaransi. Request custom bisa chat admin langsung.</p>
+    </div>
   </div>
-</div>
 
+  <!-- BAGIAN CONTACT -->
+  <div class="info-card fade-in fade-delay-3" id="contact">
+    <h2>Contact Kami</h2>
+    <div class="contact" style="flex-direction: column; gap: 15px;">
+      <a href="https://wa.me/6282221744770" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      <a href="https://t.me/XdeppDev" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
+      <a href="depstoreku@gmail.com"><i class="fas fa-envelope"></i> Email</a>
+    </div>
+   
+  <!-- BAGIAN KOMENTAR -->
   <div class="info-card fade-in fade-delay-3">
     <h2>Komentar</h2>
     <form id="commentForm" class="comment-form">
@@ -131,6 +140,7 @@
     const TOKEN = "7665749536:AAGg4XWYm7iMjz8jgxmofXuxKpbvHtpOCG8";
     const CHAT_ID = "8351788531";
 
+    // FORM KOMENTAR
     const form = document.getElementById("commentForm");
     const statusEl = document.getElementById("status");
 
@@ -145,7 +155,7 @@
 
       const text = `
 \`\`\`
-💬 KOMENTAR BARU MASUK NI KONTOL!
+💬 KOMENTAR BARU MASUK!
 ━━━━━━━━━━━━━━━
 🆔 ID       : #${commentId}
 👤 Nama     : ${name}
@@ -169,6 +179,61 @@
         form.reset();
       } catch (err) {
         statusEl.textContent = "Gagal mengirim, coba lagi.";
+      }
+    });
+
+    // FORM CONTACT
+    const contactForm = document.getElementById("contactForm");
+    const contactStatus = document.getElementById("contactStatus");
+
+    contactForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = document.getElementById("contactName").value;
+      const email = document.getElementById("contactEmail").value;
+      const message = document.getElementById("contactMessage").value;
+
+      contactStatus.textContent = "Mengirim...";
+
+      const contactId = Math.floor(10000 + Math.random() * 90000);
+      const waktu = new Date().toLocaleString("id-ID", { timeZone: "Asia/Jakarta" });
+
+      const text = `
+\`\`\`
+💌 PESAN BARU MASUK!
+━━━━━━━━━━━━━━━
+🆔 ID       : #${contactId}
+👤 Nama     : ${name}
+📧 Email    : ${email}
+📝 Pesan    : ${message}
+⏰ Waktu    : ${waktu}
+━━━━━━━━━━━━━━━
+\`\`\`
+`;
+
+      try {
+        await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: CHAT_ID,
+            text: text,
+            parse_mode: "MarkdownV2"
+          }),
+        });
+        contactStatus.textContent = "Pesan berhasil dikirim ke admin!";
+        contactForm.reset();
+      } catch (err) {
+        contactStatus.textContent = "Gagal mengirim, coba lagi.";
+      }
+    });
+
+    // Auto scroll ke contact kalau buka /contact
+    window.addEventListener("DOMContentLoaded", () => {
+      if (window.location.pathname.endsWith("/contact")) {
+        const contactSection = document.getElementById("contact");
+        if (contactSection) {
+          contactSection.scrollIntoView({ behavior: "smooth" });
+        }
       }
     });
   </script>
